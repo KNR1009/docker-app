@@ -48,3 +48,13 @@ describe "PUT /posts/:id" do
     expect(post.reload.title).to eq(post_update_params[:title])
   end
 end
+
+describe 'Delete /posts/:id' do
+  it '投稿を削除する' do
+    post = create(:post)
+    #データが削除されている事を確認
+    expect { delete "/posts/#{post.id}" }.to change(Post, :count).by(-1)
+    # リクエスト成功を表す200が返ってきたか確認する。
+    expect(response.status).to eq(204)
+  end
+end
