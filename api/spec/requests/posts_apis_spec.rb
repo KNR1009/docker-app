@@ -35,3 +35,16 @@ describe 'Post /posts' do
     expect(response.status).to eq(201)
   end
 end
+
+describe "PUT /posts/:id" do
+  it '投稿が更新されること' do
+    post = create(:post)
+    post_update_params = {
+      title: "更新です"
+    }
+    put "/posts/#{post.id}", params: post_update_params
+
+    expect(response.status).to eq(200)
+    expect(post.reload.title).to eq(post_update_params[:title])
+  end
+end
